@@ -6,9 +6,12 @@
 # @Software: PyCharm
 import json
 import pandas as pd
+from flask import Flask
 from sqlalchemy import create_engine, select, Column, text as sql_text
 from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker, declarative_base
+
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 Base = declarative_base()
 
@@ -53,7 +56,67 @@ pwd = json_data["pwd"]
 basename = json_data["usr"]
 
 
-def add_new_table():
+def sqlalchemy_test():
+    ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/{basename}")
+    # 查询2021年9月30日之后的所有item
+    # sql =
+    # sql = "DELETE FROM songs WHERE song_id=8;"
+    # pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
+    # # print(df)
+    #
+    # sql = "ALTER TABLE songs ADD album VARCHAR(64);"
+    # pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
+    # # print(df)
+    #
+    # sql = "ALTER TABLE songs ADD released_date datetime;"
+    # pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
+
+    sql = "select * from songs;"
+    df = pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
+    # print(df)
+    res = []
+    for item in df.itertuples():
+        tmp = []
+        for j in range(2, 11):
+            if item[j] is not None:
+                tmp.append(item[j])
+            else:
+                tmp.append("None")
+        res.append(tmp)
+    # print(df.iloc[:, [0, 1, 3, 2]])
+    # print(res)
+    return res
+
+
+def add_new_items(song_list):
+    ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/{basename}")
+    Base.metadata.create_all(ENGINE)
+    Session = sessionmaker(bind=ENGINE)
+    session = Session()
+    try:
+        data_to_save = []
+        for item in song_list:
+            data_to_save.append(Song(song_name=item[0],
+                                     playlist=item[1],
+                                     singer=item[2],
+                                     composer=item[3],
+                                     lyrics=item[4],
+                                     arrangement=item[5],
+                                     tags=item[6],
+                                     album=item[7],
+                                     released_date=item[8]))
+        session.add_all(data_to_save)
+        session.commit()
+        print("Data insert into database zkmusic table songs successfully!")
+        sql = "select * from playlists;"
+        df = pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
+        print(df)
+
+    except Exception as e:
+        print(e)
+
+
+def add_new_playlist_input():
     ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/{basename}")
     Base.metadata.create_all(ENGINE)
     Session = sessionmaker(bind=ENGINE)
@@ -73,6 +136,7 @@ def add_new_table():
     except Exception as e:
         print(e)
 
+# ==================================================================================
 
 def test_insert():
     ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/{basename}")
@@ -110,49 +174,17 @@ def test_insert():
         sqlalchemy_test()
 
 
-def sqlalchemy_test():
-    ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/{basename}")
-    # 查询2021年9月30日之后的所有item
-    # sql =
-    # sql = "DELETE FROM songs WHERE song_id=8;"
-    # pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
-    # # print(df)
-    #
-    # sql = "ALTER TABLE songs ADD album VARCHAR(64);"
-    # pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
-    # # print(df)
-    #
-    # sql = "ALTER TABLE songs ADD released_date datetime;"
-    # pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
-
-    sql = "select * from songs;"
-    df = pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
-    # print(df)
-    res = []
-    for item in df.itertuples():
-        tmp = []
-        for j in range(2, 11):
-            if item[j] is not None:
-                tmp.append(item[j])
-            else:
-                tmp.append("None")
-        res.append(tmp)
-    # print(df.iloc[:, [0, 1, 3, 2]])
-    # print(res)
-    return res
-
-
-def sqlalchemy_test1():
-    ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/inbreed")
-    Base.metadata.create_all(ENGINE)
-    Session = sessionmaker(bind=ENGINE)
-    session = Session()
-    try:
-        session.execute(select(accounts))
-        print("Data insert into database cough_schema table cough_main successfully!")
-        # sqlalchemy_test()
-    except Exception as e:
-        print(e)
+# def sqlalchemy_test1():
+#     ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/inbreed")
+#     Base.metadata.create_all(ENGINE)
+#     Session = sessionmaker(bind=ENGINE)
+#     session = Session()
+#     try:
+#         session.execute(select(accounts))
+#         print("Data insert into database cough_schema table cough_main successfully!")
+#         # sqlalchemy_test()
+#     except Exception as e:
+#         print(e)
 
 
 if __name__ == '__main__':

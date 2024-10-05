@@ -44,7 +44,7 @@
 		
 		<div>
 			<p>新增歌曲</p>
-			<table id="table">
+			<table id="add_table">
 				<thead>
 					<th class="additemhead">歌名</th>
 					<th class="additemhead">歌手</th>
@@ -56,7 +56,7 @@
 					<th class="additemhead">tags</th>
 					<th class="additemhead">歌单</th>
 				</thead>
-				<tbody id="additem">
+				<tbody id="itemsbody">
 					<tr>
 						<th><input type="text" /></th>
 						<th><input type="text" /></th>
@@ -70,6 +70,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<div style="left: 50%;">
+				<input type="button" value="+" onclick="add_new_addeditem()"/><input type="button" value="提交" onclick="submit_additems()"/>
+			</div>
 		</div>
 		
 		<div id="title">
@@ -107,8 +110,41 @@
 		// 		console.log(arg1);
 		// 	}
 		// })
+		function add_new_addeditem(){
+			document.getElementById("itemsbody").innerHTML += "<tr><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th><th><input type=\"text\" /></th></tr>";
+		}
 
-
+		function submit_additems(){
+			var data_to_send = new FormData();
+			var form_data = [];
+			items_row = document.getElementById("itemsbody").children;
+			for (let i=0;i<items_row.length;i++) {
+				items_cols = items_row[i].children;
+				var tmpitem = [];
+				for (let j=0;j<items_cols.length;j++) {
+					// console.log(items_cols[j].firstChild.value);
+					tmpitem.push(items_cols[j].firstChild.value);
+				}
+				// console.log("\n");
+				form_data.push(tmpitem);
+			}
+			// console.log(form_data);
+			var xhr = new XMLHttpRequest();
+			var URL_v = "getitems"
+			xhr.open("POST", URL_v, true);
+			// xhr.sestRequestHeader('Content-Type','application/json');
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					// console.log(xhr.responseText);
+					var response = JSON.parse(xhr.responseText);
+					// console.log(response["response"]);
+					var resp = response["response"]["msg"];
+					alert(resp);
+				}
+			};
+			data_to_send.append("songs", form_data);
+			xhr.send();
+		}
 
 		function writelist(data) {
 			var showfilebody = document.getElementById('showfilebody');

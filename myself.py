@@ -4,7 +4,7 @@
 # @Author: ZhaoKe
 # @File : myself.py
 # @Software: PyCharm
-from flask import Flask, render_template, jsonify, redirect, url_for
+from flask import Flask, render_template, jsonify, request, url_for
 from gevent import pywsgi
 from zkmusic_sql import sqlalchemy_test
 
@@ -24,6 +24,13 @@ def get_music_list():
     print(data)
     return jsonify(response={"data": data})
 
+
+@app.route("/getitems")
+def add_new_items_http():
+    form_data = request.form
+    for key in form_data:
+        print(key)
+        print(form_data.get(key))
 
 @app.route('/zkmusic')
 def go_music():
