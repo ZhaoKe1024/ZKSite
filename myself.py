@@ -6,7 +6,7 @@
 # @Software: PyCharm
 from flask import Flask, render_template, jsonify, request, url_for
 from gevent import pywsgi
-from zkmusic_sql import sqlalchemy_test
+from zkmusic_sql import sqlalchemy_test, add_new_items
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.jinja_env.variable_start_string = '<<'
@@ -25,12 +25,25 @@ def get_music_list():
     return jsonify(response={"data": data})
 
 
-@app.route("/getitems")
+@app.route("/getitems", methods=["POST"])
 def add_new_items_http():
+    print(request.form)
     form_data = request.form
+    song_list = []
     for key in form_data:
-        print(key)
-        print(form_data.get(key))
+        print(key, ":", form_data.get(key).split(','))
+        song_list.append(form_data.get(key).split(','))
+    print("get data...")
+    print(song_list)
+    print("get data...")
+    if len(song_list) == 0:
+        msg = "length of form data is 0!"
+    else:
+        msg = add_new_items(song_list)
+    #for key in form_data:
+    #   print(key)
+    #   print(form_data.get(key))
+    return jsonify(response={"msg": msg})
 
 @app.route('/zkmusic')
 def go_music():

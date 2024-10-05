@@ -47,14 +47,14 @@
 			<table id="add_table">
 				<thead>
 					<th class="additemhead">歌名</th>
+					<th class="additemhead">歌单</th>
 					<th class="additemhead">歌手</th>
-					<th class="additemhead">专辑</th>
-					<th class="additemhead">发行时间</th>
 					<th class="additemhead">作曲</th>
 					<th class="additemhead">作词</th>
 					<th class="additemhead">编曲</th>
 					<th class="additemhead">tags</th>
-					<th class="additemhead">歌单</th>
+					<th class="additemhead">专辑</th>
+					<th class="additemhead">发行时间</th>
 				</thead>
 				<tbody id="itemsbody">
 					<tr>
@@ -116,7 +116,7 @@
 
 		function submit_additems(){
 			var data_to_send = new FormData();
-			var form_data = [];
+			// var form_data = [];
 			items_row = document.getElementById("itemsbody").children;
 			for (let i=0;i<items_row.length;i++) {
 				items_cols = items_row[i].children;
@@ -126,9 +126,9 @@
 					tmpitem.push(items_cols[j].firstChild.value);
 				}
 				// console.log("\n");
-				form_data.push(tmpitem);
+				data_to_send.append(i+"", tmpitem);
 			}
-			// console.log(form_data);
+			console.log(data_to_send);
 			var xhr = new XMLHttpRequest();
 			var URL_v = "getitems"
 			xhr.open("POST", URL_v, true);
@@ -142,8 +142,8 @@
 					alert(resp);
 				}
 			};
-			data_to_send.append("songs", form_data);
-			xhr.send();
+			// data_to_send.append("songs", form_data);
+			xhr.send(data_to_send);
 		}
 
 		function writelist(data) {

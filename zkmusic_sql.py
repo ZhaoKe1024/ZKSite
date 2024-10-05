@@ -8,7 +8,7 @@ import json
 import pandas as pd
 from flask import Flask
 from sqlalchemy import create_engine, select, Column, text as sql_text
-from sqlalchemy import Integer, String, DateTime
+from sqlalchemy import Integer, String, Date
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
@@ -41,7 +41,7 @@ class Song(Base):
     arrangement = Column(String(16))
     tags = Column(String(256))
     album = Column(String(32))
-    released_date = DateTime
+    released_date = Date
 
     # from_device = Column(DateTime)  # 采集设备？这个其实是开集识别了  # 自然数
 
@@ -89,6 +89,8 @@ def sqlalchemy_test():
 
 
 def add_new_items(song_list):
+    if len(song_list) == 0:
+        return "Error! Empty List to Save!"
     ENGINE = create_engine(f"mysql+pymysql://root:{pwd}@127.0.0.1:3306/{basename}")
     Base.metadata.create_all(ENGINE)
     Session = sessionmaker(bind=ENGINE)
@@ -111,7 +113,7 @@ def add_new_items(song_list):
         sql = "select * from playlists;"
         df = pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
         print(df)
-
+        return "Insert Successfully!"
     except Exception as e:
         print(e)
 
