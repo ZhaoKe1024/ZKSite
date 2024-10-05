@@ -31,8 +31,15 @@ def add_new_items_http():
     form_data = request.form
     song_list = []
     for key in form_data:
-        print(key, ":", form_data.get(key).split(','))
-        song_list.append(form_data.get(key).split(','))
+        if key == "code":
+            if form_data.get("code") == "ran0307":
+                continue
+            else:
+                return jsonify(response={"msg": "Error Code"})
+
+        else:
+            print(key, ":", form_data.get(key).split(','))
+            song_list.append(form_data.get(key).split(','))
     print("get data...")
     print(song_list)
     print("get data...")

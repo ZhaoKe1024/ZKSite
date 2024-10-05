@@ -41,7 +41,7 @@ class Song(Base):
     arrangement = Column(String(16))
     tags = Column(String(256))
     album = Column(String(32))
-    released_date = Date
+    released_date = Column(Date)
 
     # from_device = Column(DateTime)  # 采集设备？这个其实是开集识别了  # 自然数
 
@@ -73,15 +73,16 @@ def sqlalchemy_test():
 
     sql = "select * from songs;"
     df = pd.read_sql_query(con=ENGINE.connect(), sql=sql_text(sql))
-    # print(df)
+    df = df.where(pd.notnull(df), None)
     res = []
     for item in df.itertuples():
         tmp = []
-        for j in range(2, 11):
+        for j in range(2, 10):
             if item[j] is not None:
                 tmp.append(item[j])
             else:
-                tmp.append("None")
+                tmp.append("")
+        tmp.append(str(item[10])[:11])
         res.append(tmp)
     # print(df.iloc[:, [0, 1, 3, 2]])
     # print(res)
