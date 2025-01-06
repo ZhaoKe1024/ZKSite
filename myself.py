@@ -47,10 +47,11 @@ def add_new_items_http():
         msg = "length of form data is 0!"
     else:
         msg = add_new_items(song_list)
-    #for key in form_data:
-    #   print(key)
-    #   print(form_data.get(key))
+    # for key in form_data:
+    #     print(key)
+    #     print(form_data.get(key))
     return jsonify(response={"msg": msg})
+
 
 @app.route('/zkmusic')
 def go_music():
