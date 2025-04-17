@@ -59,6 +59,12 @@ def go_music():
     return render_template('./zkmusiclist.html')
 
 
+@app.route('/assp')
+def go_music():
+    # return redirect(url_for('./zkmusiclist.html'))
+    return render_template('./assp.html')
+
+
 if __name__ == '__main__':
     print("ZKworkhome Runing...")
     http_server = pywsgi.WSGIServer(('0.0.0.0', 80), app)
