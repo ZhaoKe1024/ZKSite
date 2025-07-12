@@ -1,0 +1,47 @@
+{
+  "luotianyi": [
+    {"song": "东京不太热", "author": "洛天依,Z新豪", "album": "东京不太热"},
+    {"song": "二人三角", "author": "洛天依,阿良良木健", "album": "恋爱理论 序章"},
+    {"song": "三月雨", "author": "洛天依", "album": "再生"},
+    {"song": "心碎烧酒", "author": "ChiliChill", "album": "心碎烧酒"},
+    {"song": "思念", "author": "洛天依,莫玄羽", "album": "思念"},
+    {"song": "回忆", "author": "乐正绫,莫玄羽", "album": "回忆"},
+    {"song": "桃花笑", "author": "洛天依,言和,乐正绫", "album": "洛天依作品集"}
+  ],
+  "shanggan": [
+    {"song": "偶尔还是会想起你", "author": "牛奶咖啡", "album": "时间的光"},
+    {"song": "芭蕉夜雨", "author": "ChiliChill", "album": "混入人类计划"},
+    {"song": "橙子汽水", "author": "ChiliChill", "album": "每到夜里我就很饿"},
+    {"song": "入秋的第一场雨真让人矫情", "author": "ChiliChill", "album": "每到夜里我就很饿"},
+    {"song": "海誓山盟亦会分开", "author": "本兮", "album": "无底线"},
+    {"song": "小妹", "author": "罗大佑", "album": "未来的主人翁"},
+    {"song": "浅唱", "author": "许嵩", "album": "许嵩早期单曲集"},
+    {"song": "庐州月", "author": "许嵩", "album": "寻雾启示"},
+    {"song": "如果当时", "author": "许嵩", "album": "自定义"},
+    {"song": "我不想忘记你", "author": "郭静", "album": "我不想忘记你"},
+    {"song": "", "author": "", "album": ""}
+
+  ],
+  "musicgame": [
+    {"song": "Spring Varnival", "author":  "3R2", "album":  "Kirara Anthems vol3"},
+    {"song": "Light up my LOVE!!", "author": "onoken,moco", "album": "Testimony Cytus / Deemo"},
+    {"song": "Best One", "author": "小野道ono,墨程", "album": ""},
+    {"song": "", "author": "", "album": ""},
+    {"song": "", "author": "", "album": ""}
+  ],
+  "game": [
+    {"song": "别让我担心", "author": "ChiliChill", "album": "别让我担心 (Acoustic Ver.)"},
+    {"song": "我不曾忘记", "author": "ChiliChill", "album": "我不曾忘记"},
+    {"song": "一梦千宵", "author": "人形兎(苏逸_Suyi)", "album": "一梦千宵"},
+    {"song": "飞鸟说", "author": "ChiliChill", "album": "混入人类计划"},
+    {"song": "", "author": "", "album": ""}
+  ],
+  "ChinaStyle": [
+    {"song": "不问天", "author": "说说Crystal", "album": "2021哔哩哔哩拜年纪"},
+    {"song": "空山新雨后", "author": "音阙诗听,锦零", "album": "听"},
+    {"song": "烟雨行舟", "author": "伦桑", "album": "烟雨行舟"},
+    {"song": "烟雨行舟", "author": "司南", "album": "烟雨行舟"},
+    {"song": "南城遇", "author": "舒译", "album": "南城遇"},
+    {"song": "", "author": "", "album": ""}
+  ]
+}
